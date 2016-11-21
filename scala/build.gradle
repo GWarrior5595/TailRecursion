@@ -1,0 +1,21 @@
+apply plugin: 'scala'
+
+dependencies {
+	compile 'org.scala-lang:scala-library:2.11.+'
+	testCompile 'org.scalatest:scalatest_2.11:3.+'
+}
+
+repositories {
+  mavenCentral()
+}
+                            
+task test(overwrite: true, dependsOn: ['testClasses'], type: JavaExec) {
+  main = 'org.scalatest.tools.Runner'
+  args = ['-R', 'build/classes/test', '-o']
+  classpath = sourceSets.test.runtimeClasspath
+}                           
+
+sourceSets.main.scala.srcDirs = ['src']
+sourceSets.test.scala.srcDirs = ['test']
+
+defaultTasks 'clean', 'test'
